@@ -14,3 +14,25 @@ def test_read_root_is_ok_and_ola_mundo():
     assert response.json() == {
         'message': 'Olá mundo'
     }  # Assert (Verificação do resultado)
+
+
+def test_create_user():
+    client = TestClient(app)
+
+    response = client.post(
+        '/users/',
+        json={
+            'username': 'testusername',
+            'password': 'password',
+            'email': 'test@test.com',
+        }
+    )
+
+    # Return the correct status code?
+    assert response.status_code == HTTPStatus.CREATED
+    # Validate the response body?
+    assert response.json() == {
+            'username': 'testusername',
+            'email': 'test@test.com',
+            'id': 1,
+    }
