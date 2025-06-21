@@ -1,19 +1,13 @@
 from http import HTTPStatus
 
-from fastapi.testclient import TestClient
 
-from src.app import app
-
-
-def test_create_user():
-    client = TestClient(app)
-
+def test_create_user(client):
     response = client.post(
         '/users/',
         json={
             'username': 'usernametest',
             'email': 'emailtest@test.com',
-            'password': 'passwordtest'
+            'password': 'passwordtest',
         },
     )
 
@@ -25,4 +19,22 @@ def test_create_user():
         'id': 1,
         'username': 'usernametest',
         'email': 'emailtest@test.com',
+    }
+
+
+def test_read_users(client):
+    response = client.get('/users/')
+
+    response_code = response.status_code
+    response_json = response.json()
+
+    assert response_code == HTTPStatus.OK
+    assert response_json == {
+        'users': [
+            {
+                'username': 'usernametest',
+                'email': 'emailtest@test.com',
+                'id': 1,
+            }
+        ]
     }
