@@ -46,8 +46,8 @@ def test_update_user(client):
         json={
             'username': 'bob',
             'email': 'bob@example.com',
-            'password': 'mynewpassword'
-        }
+            'password': 'mynewpassword',
+        },
     )
 
     assert response.status_code == HTTPStatus.OK
