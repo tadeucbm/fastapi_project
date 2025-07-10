@@ -126,8 +126,7 @@ def test_update_integrity_error(client, user, token):
 
 def test_delete_user(client, user, token):
     response = client.delete(
-        f'/users/{user.id}',
-        headers={'Authorization': f'Bearer {token}'}
+        f'/users/{user.id}', headers={'Authorization': f'Bearer {token}'}
     )
 
     assert response.status_code == HTTPStatus.OK

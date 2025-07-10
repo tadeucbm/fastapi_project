@@ -67,7 +67,7 @@ def update_user(
     user_id: int,
     user: UserSchema,
     session: Session = Depends(get_session),
-    current_user: User = Depends(get_current_user)
+    current_user: User = Depends(get_current_user),
 ):
     if current_user.id != user_id:
         raise HTTPException(
@@ -93,7 +93,7 @@ def update_user(
 def delete_user(
     user_id: int,
     session: Session = Depends(get_session),
-    current_user: User = Depends(get_current_user)
+    current_user: User = Depends(get_current_user),
 ):
     if current_user.id != user_id:
         raise HTTPException(
@@ -120,24 +120,23 @@ def read_user__exercicio(
     return db_user
 
 
-
 @app.post('/token', response_model=Token)
 def login_for_access_token(
     form_data: OAuth2PasswordRequestForm = Depends(),
-    session: Session = Depends(get_session)
+    session: Session = Depends(get_session),
 ):
     user = session.scalar(select(User).where(User.email == form_data.username))
 
     if not user:
         raise HTTPException(
             status_code=HTTPStatus.UNAUTHORIZED,
-            detail='Incorret email or password'
+            detail='Incorret email or password',
         )
 
     if not verify_password(form_data.password, user.password):
         raise HTTPException(
             status_code=HTTPStatus.UNAUTHORIZED,
-            detail='Incorrect email or password'
+            detail='Incorrect email or password',
         )
 
     access_token = create_access_token(data={'sub': user.email})

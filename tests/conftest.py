@@ -66,7 +66,7 @@ def user(session):
     user = User(
         username='Teste',
         email='teste@test.com',
-        password=get_password_hash('testtest')
+        password=get_password_hash('testtest'),
     )
     session.add(user)
     session.commit()
